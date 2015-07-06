@@ -1,0 +1,27 @@
+{
+  "name": "scan",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "nati giat",
+  "license": "ISC",
+  "dependencies": {
+    "connect": "^3.4.0",
+    "express": "^4.13.1",
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-livereload": "^0.1.2",
+    "grunt-express-server": "^0.5.1",
+    "grunt-reload": "^0.2.0",
+    "matchdep": "^0.3.0"
+  },
+  "devDependencies": {
+    "grunt-contrib-connect": "^0.10.1",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-express-server": "^0.5.1",
+    "grunt-open": "^0.2.3"
+  }
+}
