@@ -1,42 +1,73 @@
-//http://rhumaric.com/2013/05/reloading-magic-with-grunt-and-livereload/
-//read
 module.exports = function(grunt) {
  
-  // Load Grunt tasks declared in the package.json file
-  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
  
+
   // Configure Grunt 
   grunt.initConfig({
- 
-    // grunt-contrib-connect will serve the files of the project
-    // on specified port and hostname
-    connect: {
-      all: {
-        options:{
-          port: 9000,
-          hostname: "0.0.0.0",
-          // Prevents Grunt to close just after the task (starting the server) completes
-          // This will be removed later as `watch` will take care of that
-          keepalive: true
-        }
-      }
+
+
+    concat: {
+      js: {
+        src: ['app/js/1.js', 'app/js/2.js'],
+        dest: 'app/js/build/script.js',
+
+      },
+      css: {
+        src: ['app/css/style.css', 'app/css/_top.css'],
+        dest: 'app/css/build/style.css',
+      },
     },
- 
-    // grunt-open will open your browser at the project's URL
+
+    watch: {
+      options:{livereload: true},
+      js: {
+        files: ['app/js/**/*.js'],
+        tasks: ['concat:js'],
+        options: {
+          spawn: false,
+        },
+      },
+      css: {
+        files: ['app/css/**/*.css'],
+        tasks: ['concat:css'],
+        options: {
+          spawn: false,
+        },
+      },
+    },
+
+
+    express: {
+        all:{
+          options:{
+            port:3000,
+            hostname: 'localhost',
+            bases: ['.'],
+            livereload: true
+          }
+        }
+    },
+
     open: {
-      all: {
+      dev: {
         // Gets the port from the connect configuration
-        app: 'chrome',
-        path: 'http://localhost:<%= connect.all.options.port%>'
+        path: 'http://localhost:<%= express.all.options.port%>',
+        app: 'chrome'
       }
     }
+
+   
+
+
+
   });
- 
-  // Creates the `server` task
-  grunt.registerTask('server',[
-    // Open before connect because connect uses keepalive at the moment
-    // so anything after connect wouldn't run
-    'open', 
-    'connect'
-  ]);
+  
+
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-express');
+  grunt.loadNpmTasks('grunt-open');
+  grunt.registerTask('default', ['concat' , 'watch']);
+  grunt.registerTask('server', [ 'express' ,'open', 'watch']);
+   
 };
