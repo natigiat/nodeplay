@@ -1,0 +1,13 @@
+body {
+	background: red;
+	width: 200px;
+	height: 300px;	
+}
+
+.container{
+	width: 90%;
+}
+.row {
+	float: left;
+}
+
